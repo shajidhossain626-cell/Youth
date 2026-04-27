@@ -205,7 +205,7 @@ tr.cr:hover td{background:rgba(255,255,255,.02)}
 "use strict";
 let TK=localStorage.getItem("adk")||"";
 const A={
-  g:p=>fetch("/api/admin"+p,{headers:{"X-Admin-Token":TK}}).then(r=>{if(!r.ok)throw r;return r.json()}),
+  g:p=>fetch("/api/admin"+p,{cache:"no-store",headers:{"X-Admin-Token":TK}}).then(r=>{if(!r.ok)throw r;return r.json()}),
   po:(p,b)=>fetch("/api/admin"+p,{method:"POST",headers:{"Content-Type":"application/json","X-Admin-Token":TK},body:JSON.stringify(b)}).then(r=>{if(!r.ok)throw r;return r.json()}),
   pu:(p,b)=>fetch("/api/admin"+p,{method:"PUT",headers:{"Content-Type":"application/json","X-Admin-Token":TK},body:JSON.stringify(b)}).then(r=>{if(!r.ok)throw r;return r.json()}),
   de:p=>fetch("/api/admin"+p,{method:"DELETE",headers:{"X-Admin-Token":TK}}).then(r=>{if(!r.ok)throw r;return r.json()}),

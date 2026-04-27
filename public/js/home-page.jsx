@@ -1,8 +1,17 @@
-// AURA — Homepage
+// YOUTH — Homepage
 
 function HomePage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, theme }) {
   const isDark = theme === "dark";
-  const featured = PRODUCTS.filter(p => p.featured).slice(0, 4);
+  const featured = getProducts().filter(p => p.featured).slice(0, 4);
+  const categoryImageMap = { tshirts: "washed-tee", bottoms: "cargo-pants", shirts: "check-shirt", outerwear: "fleece-hoodie", accessories: "logo-cap", sneakers: "sneaker" };
+  const homeCategories = getCollections()
+    .filter(c => c.id !== "all")
+    .slice(0, 6)
+    .map(c => {
+      const itemCount = c.count || getProducts().filter(p => p.collection === c.id).length;
+      const firstProduct = getProducts().find(p => p.collection === c.id);
+      return { ...c, subtitle: itemCount + " items", img: categoryImageMap[c.id] || (firstProduct && firstProduct.images && firstProduct.images[0]) || "tee", h: "420px" };
+    });
   const [heroParallax, setHeroParallax] = React.useState({ x: 0, y: 0 });
 
   React.useEffect(() => {
@@ -27,17 +36,13 @@ function HomePage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, them
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "48px" }}>
             <div>
               <p style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#d6b25e", marginBottom: "12px" }}>Curated by Category</p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 400 }}>Shop by World</h2>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 400 }}>Shop by Category</h2>
             </div>
             <Button variant="ghost" onClick={() => onNavigate("collection")}>View All <Icons.ArrowRight /></Button>
           </div>
         </Reveal>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }} className="category-grid">
-          {[
-            { id: "fashion", label: "Bottom", subtitle: "6 pieces", img: "blazer", h: "460px" },
-            { id: "beauty", label: "T-SHirts", subtitle: "5 essentials", img: "face-oil", h: "460px" },
-            { id: "home", label: "pant", subtitle: "5 objects", img: "candles", h: "460px" },
-          ].map((cat, i) => (
+          {homeCategories.map((cat, i) => (
             <Reveal key={cat.id} delay={i * 100}>
               <CategoryCard cat={cat} onNavigate={onNavigate} isDark={isDark} />
             </Reveal>

@@ -11,7 +11,7 @@ function CollectionPage({ params, onNavigate, onAddToCart, onToggleWishlist, wis
     if (params?.filter) setActiveFilter(params.filter);
   }, [params?.filter]);
 
-  const filtered = PRODUCTS.filter(p => activeFilter === "all" ? true : p.collection === activeFilter);
+  const filtered = getProducts().filter(p => activeFilter === "all" ? true : p.collection === activeFilter);
   const sorted = [...filtered].sort((a, b) => {
     if (sort === "price-asc") return a.price - b.price;
     if (sort === "price-desc") return b.price - a.price;
@@ -52,7 +52,7 @@ function CollectionPage({ params, onNavigate, onAddToCart, onToggleWishlist, wis
         }}>
           {/* Category Filters */}
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            {COLLECTIONS.map(c => (
+            {getCollections().map(c => (
               <button key={c.id} onClick={() => setActiveFilter(c.id)}
                 style={{
                   padding: "8px 18px", fontSize: "10px", letterSpacing: "0.1em",
@@ -172,7 +172,7 @@ function ListProductRow({ product, onNavigate, onAddToCart, onToggleWishlist, wi
 // ── Product Detail Page ───────────────────────────────────
 function ProductPage({ params, onNavigate, onAddToCart, onToggleWishlist, wishlistIds, theme }) {
   const isDark = theme === "dark";
-  const product = PRODUCTS.find(p => p.id === params?.productId) || PRODUCTS[0];
+  const product = getProducts().find(p => p.id === params?.productId) || getProducts()[0];
   const [selectedSize, setSelectedSize] = React.useState(product.sizes[0]);
   const [selectedColor, setSelectedColor] = React.useState(product.colors[0] || null);
   const [qty, setQty] = React.useState(1);
@@ -183,7 +183,7 @@ function ProductPage({ params, onNavigate, onAddToCart, onToggleWishlist, wishli
   const [tab, setTab] = React.useState("description");
   const imgRef = React.useRef();
   const isWished = wishlistIds?.includes(product.id);
-  const related = PRODUCTS.filter(p => p.collection === product.collection && p.id !== product.id).slice(0, 4);
+  const related = getProducts().filter(p => p.collection === product.collection && p.id !== product.id).slice(0, 4);
 
   const handleMouseMove = (e) => {
     const rect = imgRef.current?.getBoundingClientRect();
@@ -441,7 +441,7 @@ function ProductPage({ params, onNavigate, onAddToCart, onToggleWishlist, wishli
 // ── Wishlist Page ─────────────────────────────────────────
 function WishlistPage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, theme }) {
   const isDark = theme === "dark";
-  const wished = PRODUCTS.filter(p => wishlistIds.includes(p.id));
+  const wished = getProducts().filter(p => wishlistIds.includes(p.id));
 
   return (
     <div style={{ paddingTop: "64px", minHeight: "100vh" }}>

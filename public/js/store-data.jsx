@@ -527,4 +527,16 @@ function ProductImage({ type, className, style, dark }) {
   );
 }
 
-Object.assign(window, { STORE_CONFIG, COLLECTIONS, PRODUCTS, ProductImage });
+function getProducts() {
+  const live = window.__appContext && window.__appContext.storeData && window.__appContext.storeData.products;
+  return Array.isArray(live) && live.length ? live : (window.PRODUCTS || PRODUCTS);
+}
+function getCollections() {
+  const live = window.__appContext && window.__appContext.storeData && window.__appContext.storeData.categories;
+  return Array.isArray(live) && live.length ? live : (window.COLLECTIONS || COLLECTIONS);
+}
+function getSettings() {
+  const live = window.__appContext && window.__appContext.storeData && window.__appContext.storeData.settings;
+  return live && Object.keys(live).length ? live : (window.STORE_CONFIG || STORE_CONFIG);
+}
+Object.assign(window, { STORE_CONFIG, COLLECTIONS, PRODUCTS, ProductImage, getProducts, getCollections, getSettings });

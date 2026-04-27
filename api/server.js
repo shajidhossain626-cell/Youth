@@ -91,6 +91,12 @@ const auth = (req, res, next) => {
 // ── Middleware ────────────────────────────────────────────
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
+app.use("/api", (req, res, next) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  next();
+});
 
 // ── Image upload → /tmp ───────────────────────────────────
 const upload = multer({
@@ -253,7 +259,7 @@ function sendFile(res, filePath) {
   const ext  = path.extname(filePath).toLowerCase();
   const mime = MIME[ext] || "application/octet-stream";
   res.setHeader("Content-Type", mime);
-  res.setHeader("Cache-Control", "public, max-age=3600");
+  res.setHeader("Cache-Control", ext === ".html" || ext === ".js" || ext === ".jsx" ? "no-store" : "public, max-age=3600");
   res.send(fs.readFileSync(filePath));
   return true;
 }

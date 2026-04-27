@@ -71,8 +71,8 @@
 <script type="text/babel">
 // API helpers used to load live admin data
 const API = {
-  get: (path) => fetch(`/api`).then(r => { if (!r.ok) throw new Error(`GET  failed`); return r.json(); }),
-  post: (path, body) => fetch(`/api`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then(r => { if (!r.ok) throw new Error(`POST  failed`); return r.json(); }),
+  get: (path) => fetch(`/api${path}`, { cache: "no-store" }).then(r => { if (!r.ok) throw new Error(`GET ${path} failed`); return r.json(); }),
+  post: (path, body) => fetch(`/api${path}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then(r => { if (!r.ok) throw new Error(`POST ${path} failed`); return r.json(); }),
 };
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
