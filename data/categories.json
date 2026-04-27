@@ -1,0 +1,27 @@
+[
+  {
+    "id": "tshirts",
+    "label": "T-Shirts",
+    "count": 2
+  },
+  {
+    "id": "bottoms",
+    "label": "Bottoms",
+    "count": 2
+  },
+  {
+    "id": "shirts",
+    "label": "Shirts",
+    "count": 2
+  },
+  {
+    "id": "outerwear",
+    "label": "Outerwear",
+    "count": 2
+  },
+  {
+    "id": "accessories",
+    "label": "Accessories",
+    "count": 2
+  }
+]

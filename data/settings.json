@@ -1,0 +1,15 @@
+{
+  "storeName": "YOUTH",
+  "tagline": "Premium Bangladeshi streetwear built for everyday confidence.",
+  "accentColor": "#d6b25e",
+  "theme": "dark",
+  "fontPair": "outfit",
+  "heroLayout": "split",
+  "cardRadius": 8,
+  "email": "hello@youthbd.com",
+  "instagram": "@youth.bd",
+  "currency": "BDT",
+  "currencySymbol": "৳",
+  "freeShippingThreshold": 3000,
+  "shippingCost": 100
+}
