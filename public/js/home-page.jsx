@@ -1,30 +1,17 @@
-// AURA — Homepage
+// YOUTH — Homepage
 
 function HomePage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, theme }) {
   const isDark = theme === "dark";
-  const liveProducts = (window.__appContext?.storeData?.products?.length ? window.__appContext.storeData.products : PRODUCTS);
-  const liveCollectionsRaw = (window.__appContext?.storeData?.categories?.length ? window.__appContext.storeData.categories : COLLECTIONS).filter(c => c.id !== "all");
-  const categoryImages = {
-    all: "oversized-tee",
-    tshirts: "oversized-tee",
-    bottoms: "straight-denim",
-    shirts: "check-shirt",
-    cargo: "camo-cargo",
-    outerwear: "hoodie",
-    accessories: "cap"
-  };
-  const categoryCards = liveCollectionsRaw.slice(0, 6).map((cat) => {
-    const count = cat.id === "all" ? liveProducts.length : liveProducts.filter(p => p.collection === cat.id).length;
-    const firstProduct = cat.id === "all" ? liveProducts[0] : liveProducts.find(p => p.collection === cat.id);
-    return {
-      id: cat.id,
-      label: cat.label,
-      subtitle: String(count) + " " + (count === 1 ? "piece" : "pieces"),
-      img: categoryImages[cat.id] || firstProduct?.images?.[0] || "oversized-tee",
-      h: "420px"
-    };
-  });
-  const featured = liveProducts.filter(p => p.featured).slice(0, 4);
+  const featured = getProducts().filter(p => p.featured).slice(0, 4);
+  const categoryImageMap = { tshirts: "washed-tee", bottoms: "cargo-pants", shirts: "check-shirt", outerwear: "fleece-hoodie", accessories: "logo-cap", sneakers: "sneaker" };
+  const homeCategories = getCollections()
+    .filter(c => c.id !== "all")
+    .slice(0, 6)
+    .map(c => {
+      const itemCount = c.count || getProducts().filter(p => p.collection === c.id).length;
+      const firstProduct = getProducts().find(p => p.collection === c.id);
+      return { ...c, subtitle: itemCount + " items", img: categoryImageMap[c.id] || (firstProduct && firstProduct.images && firstProduct.images[0]) || "tee", h: "420px" };
+    });
   const [heroParallax, setHeroParallax] = React.useState({ x: 0, y: 0 });
 
   React.useEffect(() => {
@@ -55,7 +42,7 @@ function HomePage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, them
           </div>
         </Reveal>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }} className="category-grid">
-          {categoryCards.map((cat, i) => (
+          {homeCategories.map((cat, i) => (
             <Reveal key={cat.id} delay={i * 100}>
               <CategoryCard cat={cat} onNavigate={onNavigate} isDark={isDark} />
             </Reveal>
@@ -97,15 +84,15 @@ function HomePage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, them
           }} />
           <div style={{ position: "absolute", bottom: "40px", left: "40px", color: "#f7f3ec" }}>
             <Badge label="New" />
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "32px", fontWeight: 400, marginTop: "12px", marginBottom: "8px" }}>YOUTH Essentials</h3>
-            <p style={{ fontSize: "13px", opacity: 0.7, marginBottom: "20px" }}>New streetwear essentials for daily confidence</p>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "32px", fontWeight: 400, marginTop: "12px", marginBottom: "8px" }}>The Soie Edit</h3>
+            <p style={{ fontSize: "13px", opacity: 0.7, marginBottom: "20px" }}>Pure silk for considered living</p>
             <Button variant="primary" size="sm" onClick={() => onNavigate("product", { productId: 2 })}>Discover</Button>
           </div>
         </div>
         <div style={{ display: "grid", gridTemplateRows: "1fr 1fr" }}>
           {[
-            { type: "camo-cargo", title: "Cargo Drop", sub: "Camo Cargo Pants", id: 7 },
-            { type: "check-shirt", title: "Shirt Edit", sub: "Premium Check Shirt", id: 3 },
+            { type: "face-oil", title: "Skin Ritual", sub: "The Radiance Oil", id: 7 },
+            { type: "candles", title: "At Home", sub: "Noir Candle Trio", id: 13 },
           ].map((item, i) => (
             <div key={item.type} style={{ position: "relative", overflow: "hidden", cursor: "pointer" }}
               onClick={() => onNavigate("product", { productId: item.id })}>
@@ -136,9 +123,9 @@ function HomePage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, them
         </Reveal>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }} className="testimonial-grid">
           {[
-            { quote: "The fit and fabric feels premium. Perfect for everyday streetwear.", author: "YOUTH Customer", role: "Dhaka", rating: 5, product: "Oversized Signature Tee" },
-            { quote: "Cargo pants quality is strong and the look is exactly what I wanted.", author: "Verified Buyer", role: "Chattogram", rating: 5, product: "Camo Cargo Pants" },
-            { quote: "The check shirt is comfortable, breathable, and looks clean.", author: "Regular Customer", role: "Bangladesh", rating: 5, product: "Premium Check Shirt" },
+            { quote: "The wrap coat has completely redefined my wardrobe. I wear it every day and still get stopped on the street.", author: "Margaux D.", role: "Fashion Editor, Paris", rating: 5, product: "Atelier Wrap Coat" },
+            { quote: "The face oil is the only product I've repurchased more than three times. It genuinely transformed my skin.", author: "Charlotte H.", role: "Creative Director, London", rating: 5, product: "Radiance Face Oil" },
+            { quote: "Everything about these candles is considered — the vessels, the scent, the burn. Genuinely luxurious.", author: "Elena V.", role: "Interior Stylist, Milan", rating: 5, product: "Noir Candle Trio" },
           ].map((t, i) => (
             <Reveal key={i} delay={i * 100}>
               <div style={{
@@ -204,7 +191,7 @@ function HeroSection({ isDark, heroParallax, onNavigate }) {
       }}>
         {/* Full-bleed image top half */}
         <div style={{ position: "relative", width: "100%", height: "55vw", minHeight: "260px", maxHeight: "380px", flexShrink: 0 }}>
-          <ProductImage type="oversized-tee" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+          <ProductImage type="coat" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
           {/* Bottom fade into bg */}
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0, height: "60%",
@@ -222,7 +209,7 @@ function HeroSection({ isDark, heroParallax, onNavigate }) {
               boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
             }}>
               <p style={{ fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.5, marginBottom: "4px" }}>Now Available</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", marginBottom: "2px" }}>Oversized Signature Tee</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", marginBottom: "2px" }}>Atelier Wrap Coat</p>
               <p style={{ fontSize: "12px", color: "#d6b25e", fontWeight: 600 }}>৳890</p>
             </div>
           </div>
@@ -232,7 +219,7 @@ function HeroSection({ isDark, heroParallax, onNavigate }) {
         <div style={{ padding: "24px 24px 48px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginBottom: "16px", opacity: 0.6 }}>
             <div style={{ width: "24px", height: "1px", background: "#d6b25e" }} />
-            <span style={{ fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase" }}>New Streetwear Drop 2026</span>
+            <span style={{ fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase" }}>Spring Collection 2026</span>
           </div>
           <h1 style={{
             fontFamily: "'Cormorant Garamond', serif",
@@ -287,7 +274,7 @@ function HeroSection({ isDark, heroParallax, onNavigate }) {
           transform: `translate(${heroParallax.x * 0.5}px, ${heroParallax.y * 0.3}px)`,
           transition: "transform 0.6s ease",
         }}>
-          <ProductImage type="oversized-tee" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <ProductImage type="coat" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           <div style={{
             position: "absolute", inset: 0,
             background: isDark
@@ -308,7 +295,7 @@ function HeroSection({ isDark, heroParallax, onNavigate }) {
             boxShadow: "0 24px 48px rgba(0,0,0,0.2)",
           }}>
             <p style={{ fontSize: "10px", letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.5, marginBottom: "8px" }}>Now Available</p>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "18px", marginBottom: "4px" }}>Oversized Signature Tee</p>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "18px", marginBottom: "4px" }}>Atelier Wrap Coat</p>
             <p style={{ fontSize: "14px", color: "#d6b25e", fontWeight: 600 }}>৳890</p>
           </div>
         </div>
@@ -317,7 +304,7 @@ function HeroSection({ isDark, heroParallax, onNavigate }) {
         <div style={{ maxWidth: "540px" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginBottom: "24px", opacity: 0.6 }}>
             <div style={{ width: "32px", height: "1px", background: "#d6b25e" }} />
-            <span style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase" }}>New Streetwear Drop 2026</span>
+            <span style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase" }}>Spring Collection 2026</span>
           </div>
           <h1 style={{
             fontFamily: "'Cormorant Garamond', serif",
@@ -352,7 +339,7 @@ function CategoryCard({ cat, onNavigate, isDark }) {
   const [hovered, setHovered] = React.useState(false);
   return (
     <div
-      onClick={() => onNavigate("collection", { filter: cat.id || "all" })}
+      onClick={() => onNavigate("collection", { filter: cat.id })}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{

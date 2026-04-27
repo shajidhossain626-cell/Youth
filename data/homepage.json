@@ -1,35 +1,44 @@
 {
   "hero": {
     "badge": "New Streetwear Drop 2026",
-    "headline": "Built for the Streets.",
-    "subtext": "Premium Bangladeshi streetwear — clean fits, stronger fabrics, and everyday confidence.",
+    "headline": "Built for the streets. Designed with purpose.",
+    "subtext": "Premium t-shirts, shirts, cargos, denim, hoodies and accessories for the new generation of Bangladesh.",
     "ctaText": "Shop New Drop",
-    "ctaSecondary": "Explore Collection"
+    "ctaSecondary": "Explore Lookbook"
   },
   "marquee": [
-    "Cash on Delivery Available",
+    "Free Shipping on ৳3000+",
     "·",
-    "Delivery All Over Bangladesh",
+    "Premium Streetwear",
     "·",
-    "Premium Streetwear Essentials",
+    "Cash on Delivery",
     "·",
-    "New Drops Weekly",
+    "All Over Bangladesh Delivery",
+    "·",
+    "Limited Drops",
     "·"
   ],
   "testimonials": [
     {
-      "quote": "The fit and fabric feels premium. Perfect for everyday streetwear.",
-      "author": "YOUTH Customer",
-      "role": "Dhaka",
+      "quote": "The cargo pants fit and fabric feel premium. Easily my favorite streetwear purchase.",
+      "author": "Arif H.",
+      "role": "Customer, Dhaka",
       "rating": 5,
-      "product": "Oversized Signature Tee"
+      "product": "Tactical Cargo Pants"
     },
     {
-      "quote": "Cargo pants quality is strong and the look is exactly what I wanted.",
-      "author": "Verified Buyer",
-      "role": "Chattogram",
+      "quote": "The oversized tee has the exact drop-shoulder fit I wanted.",
+      "author": "Sami R.",
+      "role": "Customer, Chattogram",
       "rating": 5,
-      "product": "Camo Cargo Pants"
+      "product": "Oversized Washed Tee"
+    },
+    {
+      "quote": "YOUTH feels local but premium. The finishing is much better than regular brands.",
+      "author": "Nadia K.",
+      "role": "Customer, Sylhet",
+      "rating": 5,
+      "product": "Core Logo Tee"
     }
   ]
 }
