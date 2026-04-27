@@ -204,18 +204,19 @@ tr.cr:hover td{background:rgba(255,255,255,.02)}
 <script>
 "use strict";
 let TK=localStorage.getItem("adk")||"";
+async function apiJson(url, opts={}){const r=await fetch(url,{cache:"no-store",...opts});let data={};try{data=await r.json()}catch(e){}if(!r.ok){const msg=data.error||("Request failed: "+r.status);throw new Error(msg)}return data}
 const A={
-  g:p=>fetch("/api/admin"+p,{cache:"no-store",headers:{"X-Admin-Token":TK}}).then(r=>{if(!r.ok)throw r;return r.json()}),
-  po:(p,b)=>fetch("/api/admin"+p,{method:"POST",headers:{"Content-Type":"application/json","X-Admin-Token":TK},body:JSON.stringify(b)}).then(r=>{if(!r.ok)throw r;return r.json()}),
-  pu:(p,b)=>fetch("/api/admin"+p,{method:"PUT",headers:{"Content-Type":"application/json","X-Admin-Token":TK},body:JSON.stringify(b)}).then(r=>{if(!r.ok)throw r;return r.json()}),
-  de:p=>fetch("/api/admin"+p,{method:"DELETE",headers:{"X-Admin-Token":TK}}).then(r=>{if(!r.ok)throw r;return r.json()}),
-  up:file=>{const f=new FormData();f.append("image",file);return fetch("/api/admin/upload",{method:"POST",headers:{"X-Admin-Token":TK},body:f}).then(r=>r.json())}
+  g:p=>apiJson("/api/admin"+p,{headers:{"X-Admin-Token":TK}}),
+  po:(p,b)=>apiJson("/api/admin"+p,{method:"POST",headers:{"Content-Type":"application/json","X-Admin-Token":TK},body:JSON.stringify(b)}),
+  pu:(p,b)=>apiJson("/api/admin"+p,{method:"PUT",headers:{"Content-Type":"application/json","X-Admin-Token":TK},body:JSON.stringify(b)}),
+  de:p=>apiJson("/api/admin"+p,{method:"DELETE",headers:{"X-Admin-Token":TK}}),
+  up:file=>{const f=new FormData();f.append("image",file);return apiJson("/api/admin/upload",{method:"POST",headers:{"X-Admin-Token":TK},body:f})}
 };
 function toast(msg,t="ok"){const d=document.createElement("div");d.className="toast "+t;d.textContent=msg;document.getElementById("toasts").appendChild(d);setTimeout(()=>d.remove(),3400)}
 const S={auth:!!TK,page:"dashboard",products:[],categories:[],orders:[],settings:{},homepage:{},modal:null,ordTab:"all",prodCat:"all",prodQ:""};
 async function loadAll(){
   try{
-    const[pr,ca,or,se,hp]=await Promise.all([A.g("/products"),A.g("/categories"),A.g("/orders"),fetch("/api/settings").then(r=>r.json()).catch(()=>({})),fetch("/api/homepage").then(r=>r.json()).catch(()=>({}))]);
+    const[pr,ca,or,se,hp]=await Promise.all([A.g("/products"),A.g("/categories"),A.g("/orders"),fetch("/api/settings",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})),fetch("/api/homepage",{cache:"no-store"}).then(r=>r.json()).catch(()=>({}))]);
     S.products=pr;S.categories=ca;S.orders=or;S.settings=se;S.homepage=hp;render();
   }catch(e){toast("Failed to load data","err")}
 }
@@ -259,7 +260,7 @@ function tLogin(){
     </div>
     <div class="fg"><label>Admin Token</label><input id="tkin" type="password" placeholder="Enter your admin token" style="font-family:monospace;letter-spacing:.06em"/></div>
     <button class="btn btn-g" style="width:100%;margin-top:4px" onclick="doLogin()">Access Dashboard</button>
-    <p style="margin-top:18px;font-size:11px;color:var(--tx3);text-align:center;line-height:1.7">Default: <code style="background:var(--sf2);padding:1px 6px;border-radius:3px">youth-admin-secret-2026</code><br/>Set <code style="background:var(--sf2);padding:1px 6px;border-radius:3px">ADMIN_TOKEN</code> env var to change</p>
+    <p style="margin-top:18px;font-size:11px;color:var(--tx3);text-align:center;line-height:1.7">Default: <code style="background:var(--sf2);padding:1px 6px;border-radius:3px">YOUTH2026ADMIN</code><br/>Set <code style="background:var(--sf2);padding:1px 6px;border-radius:3px">ADMIN_TOKEN</code> env var to change</p>
   </div></div>`;
 }
 async function doLogin(){
@@ -267,7 +268,7 @@ async function doLogin(){
   try{
     const r=await fetch("/api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:tk})});
     if(r.ok){TK=tk;localStorage.setItem("adk",tk);S.auth=true;toast("Welcome back!");await loadAll();}
-    else toast("Invalid token","err");
+    else toast("Invalid token. Use YOUTH2026ADMIN or set ADMIN_TOKEN in Vercel.","err");
   }catch(e){toast("Connection error","err")}
 }
 function doLogout(){TK="";localStorage.removeItem("adk");S.auth=false;render()}

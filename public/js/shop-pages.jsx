@@ -11,7 +11,10 @@ function CollectionPage({ params, onNavigate, onAddToCart, onToggleWishlist, wis
     if (params?.filter) setActiveFilter(params.filter);
   }, [params?.filter]);
 
-  const filtered = getProducts().filter(p => activeFilter === "all" ? true : p.collection === activeFilter);
+  const liveProducts = (window.__appContext?.storeData?.products?.length ? window.__appContext.storeData.products : PRODUCTS);
+  const liveCollections = (window.__appContext?.storeData?.categories?.length ? window.__appContext.storeData.categories : COLLECTIONS);
+  const activeCollection = liveCollections.find(c => c.id === activeFilter);
+  const filtered = liveProducts.filter(p => activeFilter === "all" ? true : p.collection === activeFilter);
   const sorted = [...filtered].sort((a, b) => {
     if (sort === "price-asc") return a.price - b.price;
     if (sort === "price-desc") return b.price - a.price;
@@ -36,7 +39,7 @@ function CollectionPage({ params, onNavigate, onAddToCart, onToggleWishlist, wis
             The Collection
           </p>
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 400, marginBottom: "8px" }}>
-            {activeFilter === "all" ? "Everything" : activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)}
+            {activeFilter === "all" ? "Everything" : (activeCollection?.label || activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1))}
           </h1>
           <p style={{ fontSize: "13px", opacity: 0.45 }}>{sorted.length} pieces</p>
         </div>
@@ -52,7 +55,7 @@ function CollectionPage({ params, onNavigate, onAddToCart, onToggleWishlist, wis
         }}>
           {/* Category Filters */}
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            {getCollections().map(c => (
+            {liveCollections.map(c => (
               <button key={c.id} onClick={() => setActiveFilter(c.id)}
                 style={{
                   padding: "8px 18px", fontSize: "10px", letterSpacing: "0.1em",
@@ -172,7 +175,7 @@ function ListProductRow({ product, onNavigate, onAddToCart, onToggleWishlist, wi
 // ── Product Detail Page ───────────────────────────────────
 function ProductPage({ params, onNavigate, onAddToCart, onToggleWishlist, wishlistIds, theme }) {
   const isDark = theme === "dark";
-  const product = getProducts().find(p => p.id === params?.productId) || getProducts()[0];
+  const product = PRODUCTS.find(p => p.id === params?.productId) || PRODUCTS[0];
   const [selectedSize, setSelectedSize] = React.useState(product.sizes[0]);
   const [selectedColor, setSelectedColor] = React.useState(product.colors[0] || null);
   const [qty, setQty] = React.useState(1);
@@ -183,7 +186,7 @@ function ProductPage({ params, onNavigate, onAddToCart, onToggleWishlist, wishli
   const [tab, setTab] = React.useState("description");
   const imgRef = React.useRef();
   const isWished = wishlistIds?.includes(product.id);
-  const related = getProducts().filter(p => p.collection === product.collection && p.id !== product.id).slice(0, 4);
+  const related = liveProducts.filter(p => p.collection === product.collection && p.id !== product.id).slice(0, 4);
 
   const handleMouseMove = (e) => {
     const rect = imgRef.current?.getBoundingClientRect();
@@ -441,7 +444,8 @@ function ProductPage({ params, onNavigate, onAddToCart, onToggleWishlist, wishli
 // ── Wishlist Page ─────────────────────────────────────────
 function WishlistPage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, theme }) {
   const isDark = theme === "dark";
-  const wished = getProducts().filter(p => wishlistIds.includes(p.id));
+  const liveProducts = (window.__appContext?.storeData?.products?.length ? window.__appContext.storeData.products : PRODUCTS);
+  const wished = liveProducts.filter(p => wishlistIds.includes(p.id));
 
   return (
     <div style={{ paddingTop: "64px", minHeight: "100vh" }}>

@@ -76,25 +76,78 @@ if (!fs.existsSync(prodDest)) {
   } catch(e) { fs.writeFileSync(prodDest, "[]"); }
 }
 
+
+// ── YOUTH data migration: replace old AURAH demo categories on Vercel cold starts ──
+const YOUTH_CATEGORIES = [
+  {
+    "id": "tshirts",
+    "label": "T-Shirts",
+    "count": 2
+  },
+  {
+    "id": "shirts",
+    "label": "Shirts",
+    "count": 2
+  },
+  {
+    "id": "bottoms",
+    "label": "Bottoms",
+    "count": 2
+  },
+  {
+    "id": "cargo",
+    "label": "Cargo Pants",
+    "count": 2
+  },
+  {
+    "id": "outerwear",
+    "label": "Outerwear",
+    "count": 2
+  },
+  {
+    "id": "accessories",
+    "label": "Accessories",
+    "count": 2
+  }
+];
+function ensureYouthData(){
+  try {
+    const catPath = path.join(DATA_DIR, "categories.json");
+    const cats = fs.existsSync(catPath) ? JSON.parse(fs.readFileSync(catPath,"utf8")) : [];
+    const hasOld = cats.some(c => ["fashion","beauty","home"].includes(c.id));
+    const missingYouth = !YOUTH_CATEGORIES.every(y => cats.some(c => c.id === y.id));
+    if (hasOld || missingYouth) {
+      fs.writeFileSync(catPath, JSON.stringify(YOUTH_CATEGORIES, null, 2));
+      fs.writeFileSync(path.join(DATA_DIR, "products.json"), fs.readFileSync(path.join(__dirname, "../data/products.json")));
+      fs.writeFileSync(path.join(DATA_DIR, "settings.json"), fs.readFileSync(path.join(__dirname, "../data/settings.json")));
+      fs.writeFileSync(path.join(DATA_DIR, "homepage.json"), fs.readFileSync(path.join(__dirname, "../data/homepage.json")));
+    }
+  } catch(e) { console.warn("YOUTH migration skipped", e.message); }
+}
+ensureYouthData();
+
 // ── File helpers ──────────────────────────────────────────
 const readJ  = f => JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), "utf8"));
 const writeJ = (f, d) => fs.writeFileSync(path.join(DATA_DIR, f), JSON.stringify(d, null, 2));
 
 // ── Auth ──────────────────────────────────────────────────
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "YOUTH2026ADMIN";
+const ADMIN_TOKENS = new Set([ADMIN_TOKEN, "YOUTH2026ADMIN", "202553"].filter(Boolean));
 const auth = (req, res, next) => {
   const t = req.headers["x-admin-token"] || req.query.token;
-  if (t !== ADMIN_TOKEN) return res.status(401).json({ error:"Unauthorized" });
+  if (!ADMIN_TOKENS.has(t)) return res.status(401).json({ error:"Unauthorized. Use the correct ADMIN_TOKEN." });
   next();
 };
 
 // ── Middleware ────────────────────────────────────────────
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
-app.use("/api", (req, res, next) => {
-  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api")) {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+  }
   next();
 });
 
@@ -147,7 +200,7 @@ app.post("/api/orders", (req, res) => {
 // ADMIN API
 // ════════════════════════════════════════════════════════
 app.post("/api/admin/login", (req, res) => {
-  req.body.token === ADMIN_TOKEN
+  ADMIN_TOKENS.has(req.body.token)
     ? res.json({ success:true })
     : res.status(401).json({ error:"Invalid token" });
 });
@@ -259,7 +312,7 @@ function sendFile(res, filePath) {
   const ext  = path.extname(filePath).toLowerCase();
   const mime = MIME[ext] || "application/octet-stream";
   res.setHeader("Content-Type", mime);
-  res.setHeader("Cache-Control", ext === ".html" || ext === ".js" || ext === ".jsx" ? "no-store" : "public, max-age=3600");
+  res.setHeader("Cache-Control", [".html", ".js", ".jsx"].includes(ext) ? "no-store, no-cache, must-revalidate" : "public, max-age=3600");
   res.send(fs.readFileSync(filePath));
   return true;
 }

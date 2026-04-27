@@ -4,22 +4,25 @@
 const STORE_CONFIG = {
   "name": "YOUTH",
   "tagline": "Premium Bangladeshi streetwear built for everyday confidence.",
-  "description": "Premium Bangladeshi streetwear — t-shirts, cargos, denim, shirts, hoodies and accessories.",
   "currency": "BDT",
   "currencySymbol": "৳",
-  "email": "hello@youthbd.com",
-  "instagram": "@youth.bd"
+  "accent": "#d6b25e"
 };
 
 const COLLECTIONS = [
   {
     "id": "all",
     "label": "All",
-    "count": 10
+    "count": 12
   },
   {
     "id": "tshirts",
     "label": "T-Shirts",
+    "count": 2
+  },
+  {
+    "id": "shirts",
+    "label": "Shirts",
     "count": 2
   },
   {
@@ -28,8 +31,8 @@ const COLLECTIONS = [
     "count": 2
   },
   {
-    "id": "shirts",
-    "label": "Shirts",
+    "id": "cargo",
+    "label": "Cargo Pants",
     "count": 2
   },
   {
@@ -48,10 +51,10 @@ const PRODUCTS = [
   {
     "id": 1,
     "collection": "tshirts",
-    "name": "Oversized Washed Tee",
-    "subtitle": "Heavyweight Cotton / Jet Black",
+    "name": "Oversized Signature Tee",
+    "subtitle": "Heavyweight Cotton / Black",
     "price": 890,
-    "originalPrice": 1150,
+    "originalPrice": 1100,
     "costPrice": 430,
     "badge": "Bestseller",
     "sizes": [
@@ -63,46 +66,117 @@ const PRODUCTS = [
     ],
     "colors": [
       {
-        "name": "Jet Black",
+        "name": "Black",
         "hex": "#111111"
       },
       {
-        "name": "Off White",
-        "hex": "#eee7d8"
+        "name": "Cream",
+        "hex": "#f0e6d2"
       },
       {
-        "name": "Ash Grey",
-        "hex": "#8b8b8b"
+        "name": "Ash",
+        "hex": "#777777"
       }
     ],
-    "description": "A premium oversized tee built with heavyweight cotton, dropped shoulders, and a clean streetwear fit for everyday rotation.",
+    "description": "Premium oversized streetwear t-shirt made for everyday confidence with a structured drop-shoulder fit.",
     "details": [
       "240 GSM cotton",
-      "Oversized fit",
-      "Drop shoulder",
-      "Made in Bangladesh",
-      "Color guaranteed"
+      "Drop shoulder fit",
+      "Screen printed graphic",
+      "Made in Bangladesh"
     ],
     "images": [
-      "washed-tee",
-      "tee-detail",
-      "tee-model"
+      "oversized-tee"
     ],
     "rating": 4.9,
-    "reviews": 286,
+    "reviews": 128,
     "featured": true
   },
   {
     "id": 2,
     "collection": "tshirts",
-    "name": "Core Logo Tee",
-    "subtitle": "Premium Cotton / Cream",
+    "name": "Minimal Logo Tee",
+    "subtitle": "Soft Cotton / Off White",
     "price": 790,
-    "originalPrice": 990,
-    "costPrice": 360,
+    "originalPrice": 950,
+    "costPrice": 380,
     "badge": "New",
     "sizes": [
       "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Off White",
+        "hex": "#f4ead8"
+      },
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "description": "Clean minimal logo tee for premium daily styling.",
+    "details": [
+      "Breathable cotton",
+      "Regular oversized fit",
+      "Color guaranteed",
+      "Made in Bangladesh"
+    ],
+    "images": [
+      "minimal-tee"
+    ],
+    "rating": 4.8,
+    "reviews": 72,
+    "featured": true
+  },
+  {
+    "id": 3,
+    "collection": "shirts",
+    "name": "Premium Check Shirt",
+    "subtitle": "100% Cotton / Regular Fit",
+    "price": 890,
+    "costPrice": 470,
+    "badge": "Trending",
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Blue Check",
+        "hex": "#3e5f88"
+      },
+      {
+        "name": "Brown Check",
+        "hex": "#7a4b32"
+      }
+    ],
+    "description": "Comfortable, breathable check shirt with a clean smart-casual silhouette.",
+    "details": [
+      "100% cotton",
+      "Regular fit",
+      "Breathable fabric",
+      "All-season wear"
+    ],
+    "images": [
+      "check-shirt"
+    ],
+    "rating": 4.7,
+    "reviews": 64,
+    "featured": true
+  },
+  {
+    "id": 4,
+    "collection": "shirts",
+    "name": "Oxford Essential Shirt",
+    "subtitle": "Premium Oxford / White",
+    "price": 990,
+    "costPrice": 520,
+    "badge": null,
+    "sizes": [
       "M",
       "L",
       "XL",
@@ -110,41 +184,39 @@ const PRODUCTS = [
     ],
     "colors": [
       {
-        "name": "Cream",
-        "hex": "#f1e6d2"
+        "name": "White",
+        "hex": "#ffffff"
+      },
+      {
+        "name": "Sky",
+        "hex": "#b7d6ef"
       },
       {
         "name": "Black",
         "hex": "#111111"
-      },
-      {
-        "name": "Mocha",
-        "hex": "#6b4b35"
       }
     ],
-    "description": "A clean logo tee with a premium handfeel, breathable cotton, and minimal branding designed for daily wear.",
+    "description": "A refined button-down shirt built for office, casual wear, and premium styling.",
     "details": [
-      "100% cotton",
-      "Regular street fit",
-      "Soft enzyme wash",
-      "Screen printed logo"
+      "Oxford weave",
+      "Button-down collar",
+      "Long lasting color",
+      "Made in Bangladesh"
     ],
     "images": [
-      "core-tee",
-      "logo-detail"
+      "oxford-shirt"
     ],
     "rating": 4.8,
-    "reviews": 174,
-    "featured": true
+    "reviews": 59,
+    "featured": false
   },
   {
-    "id": 3,
+    "id": 5,
     "collection": "bottoms",
-    "name": "Tactical Cargo Pants",
-    "subtitle": "Multi-Pocket / Relaxed Fit",
-    "price": 1490,
-    "originalPrice": 1790,
-    "costPrice": 820,
+    "name": "Straight Fit Denim",
+    "subtitle": "Off White Cream / 30-36 Waist",
+    "price": 999,
+    "costPrice": 560,
     "badge": "Hot Drop",
     "sizes": [
       "30",
@@ -154,43 +226,36 @@ const PRODUCTS = [
     ],
     "colors": [
       {
-        "name": "Olive",
-        "hex": "#596044"
+        "name": "Cream",
+        "hex": "#e8dfcf"
       },
       {
-        "name": "Black",
-        "hex": "#101010"
-      },
-      {
-        "name": "Sand",
-        "hex": "#b8a276"
+        "name": "Washed Blue",
+        "hex": "#5c7390"
       }
     ],
-    "description": "Functional cargo pants with durable fabric, deep pockets, and a relaxed silhouette made for streetwear styling.",
+    "description": "Straight fit denim with a premium streetwear cut and comfortable waist fit.",
     "details": [
-      "Durable twill fabric",
-      "6-pocket utility design",
-      "Adjustable hem",
-      "Relaxed straight fit"
+      "Straight fit",
+      "Waist 30-36",
+      "Premium denim",
+      "Delivery all over BD"
     ],
     "images": [
-      "cargo-pants",
-      "cargo-detail",
-      "cargo-model"
+      "straight-denim"
     ],
     "rating": 4.9,
-    "reviews": 321,
+    "reviews": 91,
     "featured": true
   },
   {
-    "id": 4,
+    "id": 6,
     "collection": "bottoms",
-    "name": "Straight Fit Denim",
-    "subtitle": "Washed Denim / Off White",
-    "price": 999,
-    "originalPrice": 1290,
-    "costPrice": 540,
-    "badge": "Limited",
+    "name": "Relaxed Utility Trouser",
+    "subtitle": "Cotton Twill / Black",
+    "price": 1190,
+    "costPrice": 690,
+    "badge": null,
     "sizes": [
       "30",
       "32",
@@ -199,175 +264,118 @@ const PRODUCTS = [
     ],
     "colors": [
       {
-        "name": "Off White",
-        "hex": "#e9dfcf"
-      },
-      {
-        "name": "Vintage Blue",
-        "hex": "#607894"
-      },
-      {
-        "name": "Washed Black",
-        "hex": "#2b2b2b"
-      }
-    ],
-    "description": "A clean straight-fit denim made for premium casual styling with a structured shape and comfortable waist fit.",
-    "details": [
-      "Straight fit",
-      "Sizes 30–36",
-      "Premium denim feel",
-      "All over BD delivery"
-    ],
-    "images": [
-      "straight-denim",
-      "denim-detail"
-    ],
-    "rating": 4.7,
-    "reviews": 132,
-    "featured": false
-  },
-  {
-    "id": 5,
-    "collection": "shirts",
-    "name": "Check Regular Fit Shirt",
-    "subtitle": "100% Cotton / Breathable",
-    "price": 890,
-    "originalPrice": 1090,
-    "costPrice": 460,
-    "badge": "Fresh",
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      {
-        "name": "Navy Check",
-        "hex": "#1e3148"
-      },
-      {
-        "name": "Brown Check",
-        "hex": "#6d4c3d"
-      },
-      {
-        "name": "Green Check",
-        "hex": "#384b39"
-      }
-    ],
-    "description": "A comfortable check shirt made with breathable cotton, clean finishing, and color guaranteed fabric.",
-    "details": [
-      "100% cotton",
-      "Regular fit",
-      "Breathable fabric",
-      "Color guaranteed"
-    ],
-    "images": [
-      "check-shirt",
-      "shirt-detail"
-    ],
-    "rating": 4.8,
-    "reviews": 118,
-    "featured": false
-  },
-  {
-    "id": 6,
-    "collection": "shirts",
-    "name": "Minimal Half Sleeve Shirt",
-    "subtitle": "Premium Summer Fabric",
-    "price": 990,
-    "originalPrice": 1250,
-    "costPrice": 520,
-    "badge": null,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      {
-        "name": "Stone",
-        "hex": "#b8ad9a"
-      },
-      {
-        "name": "White",
-        "hex": "#f5f1e8"
-      },
-      {
         "name": "Black",
         "hex": "#111111"
+      },
+      {
+        "name": "Olive",
+        "hex": "#555844"
       }
     ],
-    "description": "A clean minimal half sleeve shirt with premium finishing, made for summer layering and smart casual streetwear looks.",
+    "description": "Relaxed utility trouser designed for clean everyday streetwear looks.",
     "details": [
-      "Soft summer fabric",
-      "Premium collar finish",
-      "Relaxed regular fit",
-      "Easy to style"
+      "Cotton twill",
+      "Relaxed leg",
+      "Durable stitching",
+      "Utility pockets"
     ],
     "images": [
-      "half-shirt"
+      "utility-trouser"
     ],
     "rating": 4.7,
-    "reviews": 94,
+    "reviews": 41,
     "featured": false
   },
   {
     "id": 7,
-    "collection": "outerwear",
-    "name": "Urban Coach Jacket",
-    "subtitle": "Water-Resistant / Boxy Fit",
-    "price": 1890,
-    "originalPrice": 2290,
-    "costPrice": 980,
-    "badge": "Editor Pick",
+    "collection": "cargo",
+    "name": "Camo Cargo Pants",
+    "subtitle": "Printed Cargo / Multi Pocket",
+    "price": 1390,
+    "originalPrice": 1590,
+    "costPrice": 820,
+    "badge": "Bestseller",
     "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
+      "30",
+      "32",
+      "34",
+      "36"
     ],
     "colors": [
       {
-        "name": "Black",
-        "hex": "#0d0d0d"
+        "name": "Forest Camo",
+        "hex": "#46513a"
       },
       {
-        "name": "Charcoal",
-        "hex": "#3a3a3a"
-      },
-      {
-        "name": "Khaki",
-        "hex": "#8b7f5a"
+        "name": "Desert Camo",
+        "hex": "#a88d64"
       }
     ],
-    "description": "A lightweight coach jacket with a boxy silhouette, subtle detailing, and weather-ready finish for urban styling.",
+    "description": "Statement camo cargo pants with functional pockets and a strong streetwear silhouette.",
     "details": [
-      "Water-resistant shell",
-      "Boxy street fit",
-      "Snap button closure",
-      "Lightweight layering"
+      "Multi-pocket design",
+      "Adjustable hem",
+      "Durable fabric",
+      "Streetwear fit"
     ],
     "images": [
-      "coach-jacket",
-      "jacket-detail"
+      "camo-cargo"
     ],
     "rating": 4.9,
-    "reviews": 155,
+    "reviews": 103,
     "featured": true
   },
   {
     "id": 8,
-    "collection": "outerwear",
-    "name": "Heavy Fleece Hoodie",
-    "subtitle": "Oversized / Drop Shoulder",
-    "price": 1590,
-    "originalPrice": 1990,
-    "costPrice": 850,
-    "badge": "Winter Essential",
+    "collection": "cargo",
+    "name": "Solid Cargo Pants",
+    "subtitle": "Black / Relaxed Fit",
+    "price": 1290,
+    "costPrice": 760,
+    "badge": "New",
     "sizes": [
-      "S",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "Khaki",
+        "hex": "#8a7a56"
+      },
+      {
+        "name": "Olive",
+        "hex": "#556044"
+      }
+    ],
+    "description": "Clean solid cargo pants for everyday outfits, ads, shoots, and casual streetwear.",
+    "details": [
+      "Relaxed fit",
+      "Cargo pockets",
+      "Comfortable waist",
+      "Strong stitching"
+    ],
+    "images": [
+      "solid-cargo"
+    ],
+    "rating": 4.8,
+    "reviews": 77,
+    "featured": false
+  },
+  {
+    "id": 9,
+    "collection": "outerwear",
+    "name": "Urban Zip Hoodie",
+    "subtitle": "Fleece / Heavyweight",
+    "price": 1490,
+    "costPrice": 850,
+    "badge": "Winter Pick",
+    "sizes": [
       "M",
       "L",
       "XL",
@@ -376,40 +384,71 @@ const PRODUCTS = [
     "colors": [
       {
         "name": "Black",
-        "hex": "#101010"
+        "hex": "#111111"
       },
       {
-        "name": "Heather Grey",
-        "hex": "#9b9b9b"
-      },
-      {
-        "name": "Forest",
-        "hex": "#233b2b"
+        "name": "Grey",
+        "hex": "#707070"
       }
     ],
-    "description": "A warm oversized hoodie built with heavy fleece, ribbed finishing, and a premium drape for winter streetwear fits.",
+    "description": "Heavyweight zip hoodie made for premium layering and winter streetwear.",
     "details": [
-      "Heavy fleece",
-      "Oversized fit",
-      "Ribbed cuffs",
-      "Kangaroo pocket"
+      "Soft fleece",
+      "Zip closure",
+      "Ribbed cuff",
+      "Premium hood structure"
     ],
     "images": [
-      "fleece-hoodie",
-      "hoodie-detail"
+      "hoodie"
     ],
     "rating": 4.8,
-    "reviews": 201,
+    "reviews": 56,
+    "featured": true
+  },
+  {
+    "id": 10,
+    "collection": "outerwear",
+    "name": "Varsity Street Jacket",
+    "subtitle": "Statement Outerwear / Black Cream",
+    "price": 2490,
+    "costPrice": 1450,
+    "badge": "Limited",
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Black/Cream",
+        "hex": "#1a1714"
+      },
+      {
+        "name": "Navy/Cream",
+        "hex": "#1c2b44"
+      }
+    ],
+    "description": "Premium varsity-style jacket for high impact streetwear styling.",
+    "details": [
+      "Statement fit",
+      "Snap buttons",
+      "Ribbed collar",
+      "Limited drop"
+    ],
+    "images": [
+      "varsity-jacket"
+    ],
+    "rating": 4.9,
+    "reviews": 38,
     "featured": false
   },
   {
-    "id": 9,
+    "id": 11,
     "collection": "accessories",
-    "name": "Logo Cap",
-    "subtitle": "Adjustable / Washed Cotton",
-    "price": 490,
-    "originalPrice": 650,
-    "costPrice": 230,
+    "name": "YOUTH Classic Cap",
+    "subtitle": "Embroidered / Adjustable",
+    "price": 590,
+    "costPrice": 260,
     "badge": "Add-on",
     "sizes": [
       "One Size"
@@ -420,36 +459,31 @@ const PRODUCTS = [
         "hex": "#111111"
       },
       {
-        "name": "Cream",
-        "hex": "#e8dfcc"
-      },
-      {
-        "name": "Olive",
-        "hex": "#5b6047"
+        "name": "Beige",
+        "hex": "#c7b99c"
       }
     ],
-    "description": "A clean adjustable cap with washed cotton texture and minimal YOUTH logo embroidery.",
+    "description": "Minimal embroidered cap made to complete everyday streetwear outfits.",
     "details": [
       "Adjustable strap",
-      "Washed cotton",
-      "Embroidered logo",
-      "One size fits most"
+      "Embroidery logo",
+      "Cotton twill",
+      "One size"
     ],
     "images": [
-      "logo-cap"
+      "cap"
     ],
-    "rating": 4.6,
-    "reviews": 76,
+    "rating": 4.7,
+    "reviews": 44,
     "featured": false
   },
   {
-    "id": 10,
+    "id": 12,
     "collection": "accessories",
-    "name": "Utility Crossbody Bag",
-    "subtitle": "Street Utility / Compact",
-    "price": 1190,
-    "originalPrice": 1450,
-    "costPrice": 610,
+    "name": "Streetwear Crossbody Bag",
+    "subtitle": "Nylon / Utility Storage",
+    "price": 790,
+    "costPrice": 410,
     "badge": "Utility",
     "sizes": [
       "One Size"
@@ -460,23 +494,22 @@ const PRODUCTS = [
         "hex": "#111111"
       },
       {
-        "name": "Grey",
-        "hex": "#626262"
+        "name": "Olive",
+        "hex": "#576247"
       }
     ],
-    "description": "A compact crossbody bag with utility pockets, adjustable strap, and daily carry capacity for streetwear looks.",
+    "description": "Lightweight crossbody bag for daily carry and streetwear styling.",
     "details": [
+      "Water resistant nylon",
       "Adjustable strap",
-      "Multiple compartments",
-      "Durable fabric",
-      "Daily carry size"
+      "Compact pockets",
+      "Daily carry"
     ],
     "images": [
-      "crossbody-bag",
-      "bag-detail"
+      "crossbody-bag"
     ],
     "rating": 4.8,
-    "reviews": 89,
+    "reviews": 36,
     "featured": false
   }
 ];
@@ -527,16 +560,4 @@ function ProductImage({ type, className, style, dark }) {
   );
 }
 
-function getProducts() {
-  const live = window.__appContext && window.__appContext.storeData && window.__appContext.storeData.products;
-  return Array.isArray(live) && live.length ? live : (window.PRODUCTS || PRODUCTS);
-}
-function getCollections() {
-  const live = window.__appContext && window.__appContext.storeData && window.__appContext.storeData.categories;
-  return Array.isArray(live) && live.length ? live : (window.COLLECTIONS || COLLECTIONS);
-}
-function getSettings() {
-  const live = window.__appContext && window.__appContext.storeData && window.__appContext.storeData.settings;
-  return live && Object.keys(live).length ? live : (window.STORE_CONFIG || STORE_CONFIG);
-}
-Object.assign(window, { STORE_CONFIG, COLLECTIONS, PRODUCTS, ProductImage, getProducts, getCollections, getSettings });
+Object.assign(window, { STORE_CONFIG, COLLECTIONS, PRODUCTS, ProductImage });
