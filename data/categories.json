@@ -5,18 +5,13 @@
     "count": 2
   },
   {
-    "id": "shirts",
-    "label": "Shirts",
-    "count": 2
-  },
-  {
     "id": "bottoms",
     "label": "Bottoms",
     "count": 2
   },
   {
-    "id": "cargo",
-    "label": "Cargo Pants",
+    "id": "shirts",
+    "label": "Shirts",
     "count": 2
   },
   {

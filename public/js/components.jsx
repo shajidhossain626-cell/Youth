@@ -251,12 +251,12 @@ function Nav({ page, onNavigate, cartCount, wishlistCount, theme, onToggleTheme,
     ? isDark ? "rgba(12,11,9,0.95)" : "rgba(247,243,236,0.95)"
     : "transparent";
 
-  const liveCollections = (window.__appContext?.storeData?.categories?.length ? window.__appContext.storeData.categories : COLLECTIONS).filter(c => c.id !== "all");
-  const links = liveCollections.slice(0, 6).map(c => ({
-    label: c.label,
-    page: "collection",
-    params: { filter: c.id || "all" }
-  }));
+  const links = [
+    { label: "Shop All", page: "collection" },
+    { label: "Fashion", page: "collection", params: { filter: "fashion" } },
+    { label: "Beauty", page: "collection", params: { filter: "beauty" } },
+    { label: "Home", page: "collection", params: { filter: "home" } },
+  ];
 
   return (
     <>
@@ -345,7 +345,7 @@ function Footer({ theme, onNavigate }) {
             <div style={{ marginTop: "24px", opacity: 0.5 }}><Icons.Instagram /></div>
           </div>
           {[
-            { title: "Shop", links: (window.__appContext?.storeData?.categories?.length ? window.__appContext.storeData.categories : COLLECTIONS).filter(c => c.id !== "all").slice(0, 6).map(c => c.label) },
+            { title: "Shop", links: ["Fashion", "Beauty", "Home", "New Arrivals", "Sale"] },
             { title: "Help", links: ["Sizing Guide", "Shipping & Returns", "Track Order", "Contact Us", "FAQs"] },
             { title: "Brand", links: ["About YOUTH", "Sustainability", "Press", "Careers", "Stockists"] },
           ].map(col => (
