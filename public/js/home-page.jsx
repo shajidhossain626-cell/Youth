@@ -34,9 +34,9 @@ function HomePage({ onNavigate, onAddToCart, onToggleWishlist, wishlistIds, them
         </Reveal>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }} className="category-grid">
           {[
-            { id: "fashion", label: "Fashion", subtitle: "6 pieces", img: "blazer", h: "460px" },
-            { id: "beauty", label: "Beauty", subtitle: "5 essentials", img: "face-oil", h: "460px" },
-            { id: "home", label: "Home", subtitle: "5 objects", img: "candles", h: "460px" },
+            { id: "fashion", label: "Bottom", subtitle: "6 pieces", img: "blazer", h: "460px" },
+            { id: "beauty", label: "T-SHirts", subtitle: "5 essentials", img: "face-oil", h: "460px" },
+            { id: "home", label: "pant", subtitle: "5 objects", img: "candles", h: "460px" },
           ].map((cat, i) => (
             <Reveal key={cat.id} delay={i * 100}>
               <CategoryCard cat={cat} onNavigate={onNavigate} isDark={isDark} />
